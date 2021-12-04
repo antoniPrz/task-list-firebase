@@ -1,8 +1,11 @@
+import Tareas from "./components/Tareas";
 
 function App() {
   return (
-    <div className="">
-      Task-List-Firebase
+    <div className="container mt-5">
+      <Tareas />
+
+
     </div>
   );
 }
