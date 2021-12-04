@@ -1,70 +1,137 @@
-# Getting Started with Create React App
+- [ ]  Creamos la aplicación con create-react-app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```html
+npx create-react-app task-list-firebase
 
-## Available Scripts
+```
 
-In the project directory, you can run:
+- [ ]  Limpiamos  los archivos  🗑
+- [ ]  Inicializamos  git
 
-### `yarn start`
+```html
+git init 
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [ ]  Hacemos commit y sicronizamos con nuevo repositorio en github 😺
+- [ ]  instalar firebase 🔥
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```html
+npm i firebase@8.7.1
+```
 
-### `yarn test`
+```html
+npm audit fix
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [ ]  Registrarse en firebase   [https://firebase.google.com/](https://firebase.google.com/)
+- [ ]  Colocar nombre del proyecto y crear proyecto
 
-### `yarn build`
+Los servicios de Firebase que usaremos son : 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Autentication
+- Database (firestore)
+- Storage
+- Hosting
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [ ]  Seleccionar base de Datos y crear base de datos , seleccionar modo prueba
+- [ ]  Relacionar la firebase con una app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ 
 
-### `yarn eject`
+- Seleccionar  </> aplicación web
+- Colocar nombre de la aplicación
+- crear y copiar las api keys
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- [ ]  crear un archivo en el directorio ***src*** llamado ***firebase.js***
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ donde importaremos firebase de la librería que se instaló y  copiamos la parte de 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+la variable de configuración y la inicialización 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```jsx
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
-## Learn More
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "xxx",
+    authDomain: "xxx",
+    databaseURL: "xxx",
+    projectId: "xxx",
+    storageBucket: "xxx",
+    messagingSenderId: "xxx",
+    appId: "xxx"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export {firebase};
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [ ]  Creamos las variables de ambiente, para eso creamos en el directorio raíz del proyecto  el archivo  ***.env.local***   donde colocaremos nuestras variables de ambiente de firebase
 
-### Code Splitting
+```jsx
+  REACT_APP_API_KEY = "xxxxxxxx"
+  REACT_APP_AUTH_DOMAIN= "xxxxxxxx"
+  REACT_APP_PROJECT_ID="xxxxxxxx"
+  REACT_APP_STORAGE_BUCKET="xxxxxxxx"
+  REACT_APP_MESSAGING_SENDER_ID= "xxxxxxxx"
+  REACT_APP_APP_ID= "xxxxxxxx"
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [ ]  Ahora reemplazamos las variables en nuestro archivo de firebase para así poder subir nuestro proyecto a github sin subir nuestras credenciales de acceso a nuestra base de datos
 
-### Analyzing the Bundle Size
+```jsx
+import app from "firebase/app"
+import "firebase/firestore"
+import "firebase/auth"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID
+};
 
-### Making a Progressive Web App
+// Initialize Firebase
+app.initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+const db = app.firestore();
+const auth = app.auth();
 
-### Advanced Configuration
+export { db, auth };
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Agregando estructura y estilos con Bootstrap 4 
 
-### Deployment
+ 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- [ ]  Agregar el <link>  en el directorio public en el archivo index.html , dentro de la etiqueta  <meta>
 
-### `yarn build` fails to minify
+```html
+<meta>
+ <link rel="stylesheet" 
+href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" 
+integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" 
+crossorigin="anonymous">
+</meta>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Usaremos para las secciones las siguientes clases 
+
+```jsx
+//Para las secciones 
+<className="container"/>
+<className="row"/>
+<className="col-md-6 col-md-4"/>
+<className=""/>
+
+//textos 
+
+<className="text-center"/>
+<className="text-info"/>
+
+```
