@@ -1,5 +1,5 @@
-import { useState } from "react"
-
+import { useEffect, useState } from "react"
+import { firebase } from "../firebase"
 
 const Tareas = () => {
 
@@ -8,6 +8,32 @@ const Tareas = () => {
   const [modoEdicion, setModoEdicion] = useState(false)
   const [indicador, setIndicador] = useState("")
 
+
+  useEffect(() => {
+
+    const obtenerDatos = async () => {
+
+      const db = firebase.firestore()
+
+      try {
+
+        const data = await db.collection("tareas").get()
+        // console.log(data)
+        const arrayData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        setTareas(arrayData)
+
+
+
+      } catch (error) {
+        console.log(error)
+
+      }
+
+    }
+    obtenerDatos()
+
+
+  }, [])
 
 
   const addTarea = (e) => {
@@ -106,7 +132,7 @@ const Tareas = () => {
           <ul className="list-group">
             {
               tareas.map((item, id) => (<li className="list-group-item"
-                key={id}> {item}
+                key={item.id}> {item.contenido}
                 <span className="float-right">
                   <button
                     className="btn btn-warning btn-sm  mr-2"
