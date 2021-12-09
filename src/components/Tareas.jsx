@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { firebase } from "../firebase"
+import { firebase, db } from "../firebase"
 
 const Tareas = () => {
 
@@ -13,7 +13,7 @@ const Tareas = () => {
 
     const obtenerDatos = async () => {
 
-      const db = firebase.firestore()
+      // const db = firebase.firestore()
 
       try {
 
